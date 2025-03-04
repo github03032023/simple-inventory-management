@@ -55,6 +55,35 @@ module.exports = {
             });
         }
     },
+
+    // Get a single product by ID
+    getProductById: (req, res) => {
+        try {
+            const productId = parseInt(req.params.id); // Convert ID from string to number
+            const product = products.find((product) => product._id === productId);
+
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    statusCode: 404,
+                    message: "Product not found",
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                statusCode: 200,
+                message: "Product retrieved successfully",
+                data: product,
+            });
+        } catch (e) {
+            res.status(500).json({
+                success: false,
+                statusCode: 500,
+                message: "Internal Server Error",
+            });
+        }
+    },
     updateProduct: (req, res) => {
         try {
             console.log("reqBody: ", req.body);
@@ -86,6 +115,7 @@ module.exports = {
             });
         }
     },
+    // To update using Patch
     patchProduct: (req, res) => {
         try {
             console.log("reqBody: ", req.body);
